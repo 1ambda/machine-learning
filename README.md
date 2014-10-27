@@ -1,4 +1,4 @@
-# Machine Learning
+# machine learning note
 
 ### Stanford
 
