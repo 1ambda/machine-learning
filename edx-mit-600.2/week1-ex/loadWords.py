@@ -1,5 +1,5 @@
 import string
-PATH_TO_FILE = 'words.txt'
+PATH_TO_FILE = './words44.txt'
 
 
 def loadWords():
@@ -9,7 +9,19 @@ def loadWords():
         print "  ", len(wordlist), "words loaded."
         return wordlist
 
-loadWords()
+
+def loadWords2():
+        try:
+                inFile = open(PATH_TO_FILE, 'r', 0)
+        except:
+                print "exception occured"
+                return ['apple', 'orange', 'pear']
+        line = inFile.readline()
+        wordlist = string.split(line)
+        print "  ", len(wordlist), "words loaded."
+        return wordlist
+
+loadWords2()
 
 # Uncomment the following function if you want to try the code template
 # def loadWords2():
