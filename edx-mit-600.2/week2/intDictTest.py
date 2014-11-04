@@ -82,4 +82,4 @@ def main():
     print '\n', 'hash_table =', hash_table
     print hash_table.getValue(15)
 
-
+print "collision prob", observe_prob(1000, 200, 100000)
