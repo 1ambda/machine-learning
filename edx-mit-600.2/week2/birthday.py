@@ -7,9 +7,9 @@ def atLeastTwoSameBirthday(n):
     return 1 - reduce(operator.mul, ys)
 
 
-def minNumOfPeople99Percent():
+def minNumOfPeopleProb(p):
     for n in range(1, 365):
-        if atLeastTwoSameBirthday(n) >= 0.99:
+        if atLeastTwoSameBirthday(n) >= p:
             return n
 
     return n
@@ -17,4 +17,4 @@ def minNumOfPeople99Percent():
 
 print atLeastTwoSameBirthday(29)
 print atLeastTwoSameBirthday(249)
-print minNumOfPeople99Percent()
+print minNumOfPeopleProb(0.99)
