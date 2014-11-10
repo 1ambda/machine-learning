@@ -38,16 +38,11 @@ Theta2_grad = zeros(size(Theta2));
 
 k = num_labels;
 
-# initialize Y as the classification output
+% initialize Y as the classification output
 diagonal = eye(k);
 Y = diagonal(y, :);
 
-## Y = zeros(m, 10); 
-## for i = 1:10
-##     Y(:, i) = (y == i);
-## endfor
-
-# forward propagation to get h(x)
+% forward propagation to get h(x)
 
 bias = ones(m, 1);
 a1 = [bias X];
@@ -56,19 +51,19 @@ z2 = a1 * Theta1';
 a2 = [bias sigmoid(z2)];
 
 z3 = a2 * Theta2';
-a3 = sigmoid(z3); # h(x), 5000 * 10 = 5000 * k
+a3 = sigmoid(z3); % h(x), 5000 * 10 = 5000 * k
 hx = a3;
 
 J =  (-1/m) * sum(sum(Y .* log(hx) + ((1-Y) .* log(1-hx))));
 
-# regularized cost function
+% regularized cost function
 
-s1 = input_layer_size;    # 400
-s2 = hidden_layer_size;   # 25
-s3 = k;                   # 10
+s1 = input_layer_size;    % 400
+s2 = hidden_layer_size;   % 25
+s3 = k;                   % 10
 
-t1 = Theta1(:, 2:end); # 25 * 400, remove thetas for bias
-t2 = Theta2(:, 2:end); # 10 * 25
+t1 = Theta1(:, 2:end); % 25 * 400, remove thetas for bias
+t2 = Theta2(:, 2:end); % 10 * 25
 
 regTerm = (lambda / (2 * m)) * (sum(sum(t1 .^ 2)) + sum(sum(t2 .^ 2)));
 
@@ -80,11 +75,11 @@ J = J + regTerm;
 %         Theta2_grad, respectively. After implementing Part 2, you can check
 %         that your implementation is correct by running checkNNGradients
 
-d3 = a3 - Y; # layer3 errors, 5000 x 10
-d2 = (d3 * Theta2)(:, 2:end) .* sigmoidGradient(z2); # layer 2 errors, 5000 * 25, no d2_0
+d3 = a3 - Y; % layer3 errors, 5000 x 10
+d2 = (d3 * Theta2)(:, 2:end) .* sigmoidGradient(z2); % layer 2 errors, 5000 * 25, no d2_0
 
-D2 = (1/m) * (d3' * a2); # 10 * 26, layer2 partial derivative without the reg term
-D1 = (1/m) * (d2' * a1); # 25 * 401, layer1 partial derivative without the reg term
+D2 = (1/m) * (d3' * a2); % 10 * 26, layer2 partial derivative without the reg term
+D1 = (1/m) * (d2' * a1); % 25 * 401, layer1 partial derivative without the reg term
 
 Theta1_grad = D1;
 Theta2_grad = D2;
