@@ -191,7 +191,6 @@ class TreatedPatient(Patient):
         self.viruses += reproduced
         return self.getTotalPop()
 
-
 #
 # PROBLEM 5
 #
