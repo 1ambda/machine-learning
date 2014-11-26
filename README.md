@@ -12,7 +12,8 @@
 
 **Process Mining** by *Wil Van der Alast*, Coursera
 
-[Week 1](http://1ambda.github.io/process-mining-week1/)  
+[Week 1](http://1ambda.github.io/process-mining-week1/) - Process Mining Intro  
+[Week 2](http://1ambda.github.io/process-mining-week2/) - Alpha Algorithm  
 
 **Intro to Computational Thinking and Data Science**, edx
 
