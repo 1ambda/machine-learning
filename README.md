@@ -19,4 +19,5 @@
 
 [Chapter 1](http://1ambda.github.io/edx-600-2x-1/) - Modeling  
 [Chapter 2](http://1ambda.github.io/edx-600-2x-2/) - Monte Carlo Simulation  
+[Chapter 3](http://1ambda.github.io/edx-600-2x-3/) - Optimization Problem  
 

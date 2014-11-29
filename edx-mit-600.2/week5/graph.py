@@ -2,9 +2,7 @@ class Node(object):
     def __init__(self, name):
         self.name = str(name)
 
-    def getName(self):
-        return self.name
-
+    def getName(self): return self.name 
     def __str__(self):
         return self.name
 
@@ -122,6 +120,8 @@ def DFS(graph, start, end, path=[]):
 
             if newPath is not None:
                 return newPath
+
+    return None
 
 
 # assumes graph is a directed graph

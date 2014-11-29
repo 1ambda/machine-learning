@@ -4,6 +4,7 @@
 #
 
 import string
+import copy
 # This imports everything from `graph.py` as if it was defined in this file!
 from graph import * 
 
@@ -18,26 +19,29 @@ from graph import *
 #
 
 def load_map(mapFilename):
-    """ 
-    Parses the map file and constructs a directed graph
+    nodes = set([])
+    edges = []
 
-    Parameters: 
-        mapFilename : name of the map file
+    ins = open(mapFilename, "r")
+    for line in ins:
+        # start, dest, total, outdoor
+        s, d, t, o = tuple(map(int, line.strip().split()))
+        start = Node(s)
+        dest = Node(d)
+        nodes.add(start)
+        nodes.add(dest)
+        edges.append(WeightedEdge(start, dest, t, o))
 
-    Assumes:
-        Each entry in the map file consists of the following four positive 
-        integers, separated by a blank space:
-            From To TotalDistance DistanceOutdoors
-        e.g.
-            32 76 54 23
-        This entry would become an edge from 32 to 76.
+    g = WeightedDigraph()
 
-    Returns:
-        a directed graph representing the map
-    """
-    # TODO
-    print "Loading map from file..."
-        
+    for n in nodes:
+        g.addNode(n)
+
+    for e in edges:
+        g.addEdge(e)
+
+    return g
+
 
 #
 # Problem 3: Finding the Shortest Path using Brute Force Search
@@ -46,63 +50,103 @@ def load_map(mapFilename):
 # and what the constraints are
 #
 
-def bruteForceSearch(digraph, start, end, maxTotalDist, maxDistOutdoors):    
-    """
-    Finds the shortest path from start to end using brute-force approach.
-    The total distance travelled on the path must not exceed maxTotalDist, and
-    the distance spent outdoor on this path must not exceed maxDistOutdoors.
+class DistancePath(object):
+    def __init__(self, path, total, out):
+        self.path = path
+        self.totalDistance = total
+        self.outdoorDistance = out
 
-    Parameters: 
-        digraph: instance of class Digraph or its subclass
-        start, end: start & end building numbers (strings)
-        maxTotalDist : maximum total distance on a path (integer)
-        maxDistOutdoors: maximum distance spent outdoors on a path (integer)
+    def __str__(self):
+        res = '' + str(self.path) + '\n'
+        res = '{0}total: {1}, outdoor: {2}'. format(res,
+                                                    self.totalDistance,
+                                                    self.outdoorDistance)
 
-    Assumes:
-        start and end are numbers for existing buildings in graph
+        return res
 
-    Returns:
-        The shortest-path from start to end, represented by 
-        a list of building numbers (in strings), [n_1, n_2, ..., n_k], 
-        where there exists an edge from n_i to n_(i+1) in digraph, 
-        for all 1 <= i < k.
 
-        If there exists no path that satisfies maxTotalDist and
-        maxDistOutdoors constraints, then raises a ValueError.
-    """
-    #TODO
-    pass
+# assumes graph is a directed graph
+def allDFSPaths(graph, start, end, distPath):
+    distPath.path += [start]
+    distPaths = []
+
+    if start == end:
+        distPaths.append(distPath)
+        return distPaths
+
+    for edge in graph.childrenOf(start):
+        node = edge[0]
+        total, outdoor = edge[1]
+        if node not in distPath.path:
+            newPath = copy.deepcopy(distPath)
+            newPath.totalDistance += total
+            newPath.outdoorDistance += outdoor
+
+            subDistPaths = allDFSPaths(graph, node, end, newPath)
+            if subDistPaths:
+                distPaths += subDistPaths
+
+    return distPaths
+
+
+def bruteForceSearch(digraph, start, end, maxTotalDist, maxDistOutdoors):
+    init = DistancePath([], 0, 0)
+    paths = allDFSPaths(digraph, Node(start), Node(end), init)
+
+    valid = filter(lambda dp:
+                   dp.totalDistance <= maxTotalDist and
+                   dp.outdoorDistance <= maxDistOutdoors, paths)
+
+    if not valid:
+        raise ValueError('no valid paths')
+
+    shortest = min(valid, key=lambda dp: dp.totalDistance)
+
+    return map(lambda x: str(x), shortest.path)
 
 #
 # Problem 4: Finding the Shorest Path using Optimized Search Method
 #
+
+
 def directedDFS(digraph, start, end, maxTotalDist, maxDistOutdoors):
-    """
-    Finds the shortest path from start to end using directed depth-first.
-    search approach. The total distance travelled on the path must not
-    exceed maxTotalDist, and the distance spent outdoor on this path must
-	not exceed maxDistOutdoors.
 
-    Parameters: 
-        digraph: instance of class Digraph or its subclass
-        start, end: start & end building numbers (strings)
-        maxTotalDist : maximum total distance on a path (integer)
-        maxDistOutdoors: maximum distance spent outdoors on a path (integer)
+    def shortestDFS(graph, start, end, distPath, shortest=None):
+        distPath.path += [start]
 
-    Assumes:
-        start and end are numbers for existing buildings in graph
+        if start == end:
+            return distPath
 
-    Returns:
-        The shortest-path from start to end, represented by 
-        a list of building numbers (in strings), [n_1, n_2, ..., n_k], 
-        where there exists an edge from n_i to n_(i+1) in digraph, 
-        for all 1 <= i < k.
+        for edge in graph.childrenOf(start):
+            node = edge[0]
+            total, outdoor = edge[1]
+            if node not in distPath.path:
 
-        If there exists no path that satisfies maxTotalDist and
-        maxDistOutdoors constraints, then raises a ValueError.
-    """
-    #TODO
-    pass
+                if distPath.totalDistance + total <= maxTotalDist and \
+                   distPath.outdoorDistance + outdoor <= maxDistOutdoors and \
+                   (shortest is None or distPath.totalDistance + total < shortest.totalDistance):
+                    newPath = copy.deepcopy(distPath)
+                    newPath.totalDistance += total
+                    newPath.outdoorDistance += outdoor
+
+                    found = shortestDFS(graph, node, end, newPath, shortest)
+
+                    if found is not None:
+                        shortest = found
+
+        return shortest
+
+    init = DistancePath([], 0, 0)
+    shortest = shortestDFS(digraph, Node(start), Node(end), init)
+
+    if shortest is None:
+        raise ValueError('no valid path')
+    else:
+        return map(lambda x: str(x), shortest.path)
+
+g = load_map('small_map.txt')
+print directedDFS(g, '1', '4', 100, 50)
+
 
 # Uncomment below when ready to test
 #### NOTE! These tests may take a few minutes to run!! ####
