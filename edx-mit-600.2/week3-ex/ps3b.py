@@ -228,7 +228,7 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
     avgPopulation = [sum(p) / float(numTrials) for p in virusPopulation]
     avgResistPopulation = [sum(rp) / float(numTrials) for rp in grVirusPopulation]
 
-    print avgPopulation
+    # print avgPopulation
     pylab.plot(range(totalStep), avgPopulation, label='total pop')
     pylab.plot(range(totalStep), avgResistPopulation, label='resist pop')
     pylab.xlabel('time step')
