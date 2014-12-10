@@ -16,11 +16,12 @@
 
 [Week 1](http://1ambda.github.io/process-mining-week1/) - Process Mining Intro  
 [Week 2](http://1ambda.github.io/process-mining-week2/) - Alpha Algorithm  
+[Week 3](http://1ambda.github.io/process-mining-week4/) - Metric, C-nets  
 
 **Intro to Computational Thinking and Data Science**, edx
 
 [Chapter 1](http://1ambda.github.io/edx-600-2x-1/) - Modeling  
 [Chapter 2](http://1ambda.github.io/edx-600-2x-2/) - Monte Carlo Simulation  
 [Chapter 3](http://1ambda.github.io/edx-600-2x-3/) - Optimization Problem  
-[Chapter 4](http://1ambda.github.io/edx-600-2x-4/) - State Transition, Hierarchical Clustering   
+[Chapter 4](http://1ambda.github.io/edx-600-2x-4/) - State Modeling, Hierarchical Clustering   
 
