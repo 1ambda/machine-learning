@@ -11,6 +11,7 @@
 [Chapter 7](http://1ambda.github.io/machine-learning-week-7/) - Support Vector Machine  
 [Chapter 8](http://1ambda.github.io/machine-learning-week-8/) - K-means, PCA Details   
 [Chapter 9](http://1ambda.github.io/machine-learning-week-9/) - Anomaly Detection, Recommender System     
+[Chapter 10](http://1ambda.github.io/machine-learning-week-10/) - Stochastic Gradient, Synthetic Data, Ceiling Analysis  
 
 **Process Mining** by *Wil Van der Alast*, Coursera
 
