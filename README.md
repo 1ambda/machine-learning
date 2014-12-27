@@ -19,6 +19,7 @@
 [Week 2](http://1ambda.github.io/process-mining-week2/) - Alpha Algorithm  
 [Week 3](http://1ambda.github.io/process-mining-week3/) - Metric, C-nets  
 [Week 4](http://1ambda.github.io/process-mining-week4/) - Conformance Checking, Dotted Chart  
+[Week 5](http://1ambda.github.io/process-mining-week5/) - Decision, Social, Organization Mining  
 
 **Intro to Computational Thinking and Data Science**, edx
 
